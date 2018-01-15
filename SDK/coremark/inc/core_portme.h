@@ -63,7 +63,7 @@ typedef clock_t CORE_TICKS;
 #endif
 #ifndef COMPILER_FLAGS 
 // #define COMPILER_FLAGS FLAGS_STR /* "Please put compiler flags here (e.g. -o3)" */
-#define COMPILER_FLAGS "-Os -fno-common -funroll-loops -finline-functions"
+#define COMPILER_FLAGS "-O3 -fno-common -funroll-loops -finline-functions"
 #endif
 #ifndef MEM_LOCATION 
  #define MEM_LOCATION "STACK"

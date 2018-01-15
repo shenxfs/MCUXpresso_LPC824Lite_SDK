@@ -10,8 +10,11 @@ NXP社区已有人分享了LPC54114的coremark移植和跑分，但还没有在M
 ![](quick.png)
 在coremark项目中建inc目录，将下载的coremark1.0的core_list_jion.c、core_main.c、core_matrix.c、core_state.c、core_util.c、simpl/core_portme.c复制到src目录，将coremark.h、simpl/core_portme.h复制到inc目录。按F5刷新
 ![](project.png)
-coremark.c是系统创建的要把它从项目中移走，因core_main.c也有main函数，所以coremark.c就不需要了。移除coremark.c方法是在“项目管理器页”右击该文件单击“Resource Configuration”->"Exlude from build..."全选中，按“Ok”就可移除该文件。
+
+coremark.c是系统创建的要把它从项目中移走，因core_main.c也有main函数，所以coremark.c就不需要了。移除coremark.c方法是在“项目管理器页”右击该文件单击“Resource Configuration”->"Exlude from build..."全选中，按“Ok”就可移除该文件。同时移除aebi_romdiv_path.s、crp.c和mtb.c。
 ![](exlude.png)
+
+![](remove.png)
 ## coremark移植
 cormark移植只需修改core_portme.c和core_portme.h两个接口文件，首先修改core_portme.c，在文件头部添加
 
@@ -82,7 +85,7 @@ cormark移植只需修改core_portme.c和core_portme.h两个接口文件，首�
 
      #ifndef COMPILER_FLAGS
     // #define COMPILER_FLAGS FLAGS_STR /* "Please put compiler flags here (e.g. -o3)" */
-    #define COMPILER_FLAGS "-Os -fno-common -funroll-loops -finline-functions"
+    #define COMPILER_FLAGS "-O3 -fno-common -funroll-loops -finline-functions"
     #endif
 
 ## 编译环境设置
@@ -91,12 +94,19 @@ cormark移植只需修改core_portme.c和core_portme.h两个接口文件，首�
 ![](dep.png)
 添加头文件路径,两lpc8_chip_82x和lpc_board_lpc824lite库的头文件路径
 ![](pre.png)
-添加ITERATIONS宏定义为12000，表示运算次数
+添加ITERATIONS宏定义为12000，表示运算次数,删除"__CODE_RED"宏
 ![](iteration.png)
+去掉使能自动加入代码读取保护镜像的选项("Enable automatic placement of Code Read Protection field in image")
+![](linker.png)
 设置优化选项“-Os -fno-common -funroll-loops -finline-functions”
 ![](opt.png)
 设置所需的库和搜索库的路径
 ![](libs.png)
 这样就完成移植，编译下载运行看结果
+编译链接目标长度
+![](size.png)
+编译优化选项是“Os”的结果
 ![](lpc.png)
-运行结果不尽人意才10分左右，每MHz也只有不到0.4，与LPC54114跑分差不多，与STM32L0x相差甚远，LPC为降低功耗损失性能太多。
+编译优化选项是“O3”的结果
+![](lpcO3.png)
+运行结果不尽人意才十几分左右，每MHz分数也只有不到0.6，与LPC54114跑分差不多，与STM32L0x相差甚远，LPC为降低功耗损失性能太多。
