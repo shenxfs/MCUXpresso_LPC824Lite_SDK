@@ -98,7 +98,7 @@ cormark移植只需修改core_portme.c和core_portme.h两个接口文件，首�
 ![](iteration.png)
 去掉使能自动加入代码读取保护镜像的选项("Enable automatic placement of Code Read Protection field in image")
 ![](linker.png)
-设置优化选项“-Os -fno-common -funroll-loops -finline-functions”
+设置优化选项“-O3 -fno-common -funroll-loops -finline-functions”
 ![](opt.png)
 设置所需的库和搜索库的路径
 ![](libs.png)
