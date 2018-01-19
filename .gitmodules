@@ -1,0 +1,3 @@
+[submodule "LPCOpen_lpc824lite"]
+	path = LPCOpen_lpc824lite
+	url = https://github.com/shenxfs/LPCOpen_lpc824lite.git
